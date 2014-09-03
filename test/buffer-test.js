@@ -137,5 +137,11 @@ describe('OffsetBuffer', function() {
       assert.equal(o.readUInt32BE(), 0x0d0e0f10);
       assert(o.isEmpty());
     });
+
+    it('should return positive values', function() {
+      o.push(new Buffer([ 0xff, 0xff, 0xff, 0xff ]));
+      assert.equal(o.readUInt32BE(), 0xffffffff);
+      assert(o.isEmpty());
+    });
   });
 });
