@@ -164,6 +164,10 @@ OffsetBuffer.prototype.take = function take(n) {
   return out;
 };
 
+OffsetBuffer.prototype.peekUInt8 = function peekUInt8() {
+  return this.buffers[0][this.offset];
+};
+
 OffsetBuffer.prototype.readUInt8 = function readUInt8() {
   this.size -= 1;
   var first = this.buffers[0];

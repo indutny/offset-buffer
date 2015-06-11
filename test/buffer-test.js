@@ -53,6 +53,17 @@ describe('OffsetBuffer', function() {
     });
   });
 
+  describe('.peekUInt8', function() {
+    it('should return and not move by one byte', function() {
+      o.push(new Buffer([ 0x1, 0x2 ]));
+      assert.equal(o.peekUInt8(), 1);
+      assert.equal(o.readUInt8(), 1);
+      assert.equal(o.peekUInt8(), 2);
+      assert.equal(o.readUInt8(), 2);
+      assert(o.isEmpty());
+    });
+  });
+
   describe('.readUInt8', function() {
     it('should return and move by one byte', function() {
       o.push(new Buffer([ 0x1, 0x2 ]));
@@ -142,6 +153,18 @@ describe('OffsetBuffer', function() {
       o.push(new Buffer([ 0xff, 0xff, 0xff, 0xff ]));
       assert.equal(o.readUInt32BE(), 0xffffffff);
       assert(o.isEmpty());
+    });
+  });
+
+  describe('.has', function() {
+    it('should properly check the amount of the remaining bytes', function() {
+      o.push(new Buffer([ 1, 2, 3 ]));
+      assert(o.has(3));
+      assert.equal(o.readUInt8(), 0x01);
+      assert(!o.has(3));
+      assert(o.has(2));
+      assert.equal(o.readUInt16BE(), 0x0203);
+      assert(!o.has(1));
     });
   });
 });
