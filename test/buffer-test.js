@@ -93,6 +93,14 @@ describe('OffsetBuffer', function() {
       assert.equal(o.readUInt16LE(), 0x0605);
       assert(o.isEmpty());
     });
+
+    it('should return and move by two bytes (regression #1)', function() {
+      o.push(new Buffer([ 0x1 ]));
+      o.push(new Buffer([ 0x2, 0x3, 0x4 ]));
+      assert.equal(o.readUInt16LE(), 0x0201);
+      assert.equal(o.readUInt16LE(), 0x0403);
+      assert(o.isEmpty());
+    });
   });
 
   describe('.readUInt24LE', function() {
@@ -103,6 +111,14 @@ describe('OffsetBuffer', function() {
       assert.equal(o.readUInt24LE(), 0x030201);
       assert.equal(o.readUInt24LE(), 0x060504);
       assert.equal(o.readUInt24LE(), 0x090807);
+      assert(o.isEmpty());
+    });
+
+    it('should return and move by three bytes (regression #1)', function() {
+      o.push(new Buffer([ 0x1, 0x2 ]));
+      o.push(new Buffer([ 0x3 ]));
+      assert.equal(o.readUInt24LE(), 0x030201);
+      assert.equal(o.buffers.length, 0);
       assert(o.isEmpty());
     });
   });
@@ -117,6 +133,14 @@ describe('OffsetBuffer', function() {
       assert.equal(o.readUInt32LE(), 0x08070605);
       assert.equal(o.readUInt32LE(), 0x0c0b0a09);
       assert.equal(o.readUInt32LE(), 0x100f0e0d);
+      assert(o.isEmpty());
+    });
+
+    it('should return and move by four bytes (regression #1)', function() {
+      o.push(new Buffer([ 0x1, 0x2, 0x3 ]));
+      o.push(new Buffer([ 0x4 ]));
+      assert.equal(o.readUInt32LE(), 0x04030201);
+      assert.equal(o.buffers.length, 0);
       assert(o.isEmpty());
     });
   });

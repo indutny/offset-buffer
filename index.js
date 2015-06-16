@@ -203,7 +203,7 @@ OffsetBuffer.prototype.readUInt16LE = function readUInt16LE() {
     this.offset = 1;
   }
 
-  if (this.offset === this.buffers[0].length) {
+  if (this.offset === this.buffers[shift].length) {
     this.offset = 0;
     shift++;
   }
@@ -244,7 +244,7 @@ OffsetBuffer.prototype.readUInt24LE = function readUInt24LE() {
   }
 
   this.size -= 3;
-  if (this.offset === this.buffers[0].length) {
+  if (this.offset === this.buffers[shift].length) {
     this.offset = 0;
     shift++;
   }
@@ -297,7 +297,7 @@ OffsetBuffer.prototype.readUInt32LE = function readUInt32LE() {
   }
 
   this.size -= 4;
-  if (this.offset === this.buffers[0].length) {
+  if (this.offset === this.buffers[shift].length) {
     this.offset = 0;
     shift++;
   }
