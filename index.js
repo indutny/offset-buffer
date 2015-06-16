@@ -1,3 +1,5 @@
+var Buffer = require('buffer').Buffer;
+
 function OffsetBuffer() {
   this.offset = 0;
   this.size = 0;
