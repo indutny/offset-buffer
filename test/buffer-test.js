@@ -8,6 +8,14 @@ describe('OffsetBuffer', function() {
   });
 
   describe('.take()', function() {
+    it('should return empty buffer', function() {
+      var b = new Buffer('hello world');
+      o.push(b);
+      var r = o.take(0);
+      assert.equal(r.length, 0);
+      assert.equal(o.size, b.length);
+    });
+
     it('should return the first buffer itself', function() {
       var b = new Buffer('hello world');
       o.push(b);

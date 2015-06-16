@@ -122,6 +122,9 @@ OffsetBuffer.prototype.copy = function copy(target, targetOff, off, n) {
 };
 
 OffsetBuffer.prototype.take = function take(n) {
+  if (n === 0)
+    return new Buffer(0);
+
   this.size -= n;
 
   // Fast cases
