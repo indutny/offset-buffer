@@ -324,8 +324,8 @@ OffsetBuffer.prototype.readUInt24BE = function readUInt24BE() {
 OffsetBuffer.prototype.readUInt32BE = function readUInt32BE() {
   var r = this.readUInt32LE();
 
-  return ((r & 0xff) * 0x1000000) +
-         ((((r >>> 8) & 0xff) << 16) |
+  return (((r & 0xff) << 24) |
+          (((r >>> 8) & 0xff) << 16) |
           (((r >>> 16) & 0xff) << 8) |
-          (r >>> 24));
+          (r >>> 24)) >>> 0;
 };
