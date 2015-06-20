@@ -72,6 +72,15 @@ describe('OffsetBuffer', function() {
     });
   });
 
+  describe('.peekInt8', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0x80 ]));
+      assert.equal(o.peekInt8(), -128);
+      assert.equal(o.readInt8(), -128);
+      assert(o.isEmpty());
+    });
+  });
+
   describe('.readUInt8', function() {
     it('should return and move by one byte', function() {
       o.push(new Buffer([ 0x1, 0x2 ]));
@@ -80,6 +89,15 @@ describe('OffsetBuffer', function() {
       assert.equal(o.readUInt8(), 2);
       assert.equal(o.readUInt8(), 3);
       assert.equal(o.readUInt8(), 4);
+      assert(o.isEmpty());
+    });
+  });
+
+  describe('.readInt8', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0x8f, 0x7f ]));
+      assert.equal(o.readInt8(), -113);
+      assert.equal(o.readInt8(), 127);
       assert(o.isEmpty());
     });
   });
@@ -103,6 +121,14 @@ describe('OffsetBuffer', function() {
     });
   });
 
+  describe('.readInt16LE', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0x23, 0x81 ]));
+      assert.equal(o.readInt16LE(), -32477);
+      assert(o.isEmpty());
+    });
+  });
+
   describe('.readUInt24LE', function() {
     it('should return and move by three bytes', function() {
       o.push(new Buffer([ 0x1, 0x2, 0x3, 0x4, 0x5 ]));
@@ -119,6 +145,14 @@ describe('OffsetBuffer', function() {
       o.push(new Buffer([ 0x3 ]));
       assert.equal(o.readUInt24LE(), 0x030201);
       assert.equal(o.buffers.length, 0);
+      assert(o.isEmpty());
+    });
+  });
+
+  describe('.readInt24LE', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0x23, 0x45, 0x81 ]));
+      assert.equal(o.readInt24LE(), -8305373);
       assert(o.isEmpty());
     });
   });
@@ -145,6 +179,14 @@ describe('OffsetBuffer', function() {
     });
   });
 
+  describe('.readInt32LE', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0xff, 0xff, 0xff, 0xff ]));
+      assert.equal(o.readInt32LE(), -1);
+      assert(o.isEmpty());
+    });
+  });
+
   describe('.readUInt16BE', function() {
     it('should return and move by two bytes', function() {
       o.push(new Buffer([ 0x1, 0x2, 0x3 ]));
@@ -152,6 +194,14 @@ describe('OffsetBuffer', function() {
       assert.equal(o.readUInt16BE(), 0x0102);
       assert.equal(o.readUInt16BE(), 0x0304);
       assert.equal(o.readUInt16BE(), 0x0506);
+      assert(o.isEmpty());
+    });
+  });
+
+  describe('.readInt16BE', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0x81, 0x23 ]));
+      assert.equal(o.readInt16BE(), -32477);
       assert(o.isEmpty());
     });
   });
@@ -164,6 +214,14 @@ describe('OffsetBuffer', function() {
       assert.equal(o.readUInt24BE(), 0x010203);
       assert.equal(o.readUInt24BE(), 0x040506);
       assert.equal(o.readUInt24BE(), 0x070809);
+      assert(o.isEmpty());
+    });
+  });
+
+  describe('.readInt24BE', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0x81, 0x45, 0x23 ]));
+      assert.equal(o.readInt24BE(), -8305373);
       assert(o.isEmpty());
     });
   });
@@ -184,6 +242,14 @@ describe('OffsetBuffer', function() {
     it('should return positive values', function() {
       o.push(new Buffer([ 0xff, 0xff, 0xff, 0xff ]));
       assert.equal(o.readUInt32BE(), 0xffffffff);
+      assert(o.isEmpty());
+    });
+  });
+
+  describe('.readInt32BE', function() {
+    it('should return signed number', function() {
+      o.push(new Buffer([ 0xff, 0xff, 0xff, 0xff ]));
+      assert.equal(o.readInt32BE(), -1);
       assert(o.isEmpty());
     });
   });

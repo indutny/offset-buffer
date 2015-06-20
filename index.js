@@ -329,3 +329,65 @@ OffsetBuffer.prototype.readUInt32BE = function readUInt32BE() {
           (((r >>> 16) & 0xff) << 8) |
           (r >>> 24)) >>> 0;
 };
+
+// Signed number APIs
+
+function signedInt8(num) {
+  if (num >= 0x80)
+    return -(0xff ^ num) - 1;
+  else
+    return num;
+}
+
+OffsetBuffer.prototype.peekInt8 = function peekInt8() {
+  return signedInt8(this.peekUInt8());
+};
+
+OffsetBuffer.prototype.readInt8 = function readInt8() {
+  return signedInt8(this.readUInt8());
+};
+
+function signedInt16(num) {
+  if (num >= 0x8000)
+    return -(0xffff ^ num) - 1;
+  else
+    return num;
+}
+
+OffsetBuffer.prototype.readInt16BE = function readInt16BE() {
+  return signedInt16(this.readUInt16BE());
+};
+
+OffsetBuffer.prototype.readInt16LE = function readInt16LE() {
+  return signedInt16(this.readUInt16LE());
+};
+
+function signedInt24(num) {
+  if (num >= 0x800000)
+    return -(0xffffff ^ num) - 1;
+  else
+    return num;
+}
+
+OffsetBuffer.prototype.readInt24BE = function readInt24BE() {
+  return signedInt24(this.readUInt24BE());
+};
+
+OffsetBuffer.prototype.readInt24LE = function readInt24LE() {
+  return signedInt24(this.readUInt24LE());
+};
+
+function signedInt32(num) {
+  if (num >= 0x80000000)
+    return -(0xffffffff ^ num) - 1;
+  else
+    return num;
+}
+
+OffsetBuffer.prototype.readInt32BE = function readInt32BE() {
+  return signedInt32(this.readUInt32BE());
+};
+
+OffsetBuffer.prototype.readInt32LE = function readInt32LE() {
+  return signedInt32(this.readUInt32LE());
+};
