@@ -32,13 +32,16 @@ OffsetBuffer.prototype.toChunks = function toChunks() {
   var chunks = [ ];
   var off = 0;
   for (var i = 0; off <= this.size && i < this.buffers.length; i++) {
-    off += this.buffers[i].length;
+    var buf = this.buffers[i];
+    off += buf.length;
 
     // Slice off last buffer
-    if (off > this.size)
-      this.buffers[i] = this.buffers[i].slice(0, -(off - this.size));
+    if (off > this.size) {
+      buf = buf.slice(0, buf.length - (off - this.size));
+      this.buffers[i] = buf;
+    }
 
-    chunks.push(this.buffers[i]);
+    chunks.push(buf);
   }
 
   // If some buffers were skipped - trim length
